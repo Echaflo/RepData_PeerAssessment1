@@ -63,8 +63,22 @@ ggplot(total_steps, aes(daily_steps)) +
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
+```r
+mean = mean(total_steps$daily_steps, na.rm=TRUE)
+```
+
+```
+## [1] 9354.23
+```
 
 
+```r
+median = median(total_steps$daily_steps, na.rm=TRUE)
+```
+
+```
+## [1] 10395
+```
 
 ## What is the average daily activity pattern?
 

@@ -43,9 +43,15 @@ ggplot(total_steps, aes(daily_steps)) +
 ```{r, echo=TRUE}
 mean = mean(total_steps$daily_steps, na.rm=TRUE)
 ```
+```{r, echo=FALSE}
+mean
+```
 
 ```{r, echo=TRUE}
 median = median(total_steps$daily_steps, na.rm=TRUE)
+```
+```{r, echo=FALSE}
+median
 ```
 
 ## What is the average daily activity pattern?
