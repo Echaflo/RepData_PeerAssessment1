@@ -7,9 +7,27 @@ output:
 
 ## The libraries that will be of support are loaded
 
-```{r, eval=TRUE}
+
+```r
 library(ggplot2)
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
 ```
 
 
@@ -18,7 +36,8 @@ library(dplyr)
 * 1. Load the initialData (i.e. read.csv())
 * 2. Process/transform the initialData (if necessary) into a format suitable for your analysis
 
-```{r, echo=TRUE}
+
+```r
 unzip("activity.zip")
 initialData <- read.csv("activity.csv", colClasses=c("numeric", "Date", "numeric"))
 ```
@@ -28,7 +47,8 @@ initialData <- read.csv("activity.csv", colClasses=c("numeric", "Date", "numeric
 
 ## What is mean total number of steps taken per day?
 
-```{r, echo=TRUE}
+
+```r
 total_steps <- initialData %>%
   group_by(date) %>%
   summarise(daily_steps = sum(steps, na.rm = TRUE))
@@ -40,11 +60,15 @@ ggplot(total_steps, aes(daily_steps)) +
   ylab("Frequency")
 ```
 
-```{r, eval=TRUE,echo=TRUE}
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+
+```r
 mean = mean(total_steps$daily_steps, na.rm=TRUE)
 ```
 
-```{r, eval=TRUE}
+
+```r
 median = median(total_steps$daily_steps, na.rm=TRUE)
 ```
 
