@@ -83,6 +83,20 @@ median = median(total_steps$daily_steps, na.rm=TRUE)
 ## What is the average daily activity pattern?
 
 
+```r
+interval_steps <- initialData %>% 
+  group_by(interval) %>%
+  summarise(steps = mean(steps, na.rm =TRUE))
+
+ggplot(data=interval_steps, aes(x=interval, y=steps)) +
+    geom_line(col="red") +
+    ggtitle("Average steps per time interval") +
+    xlab("5-minute intervals") +
+    ylab("Average number of steps taken")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
 
 
 

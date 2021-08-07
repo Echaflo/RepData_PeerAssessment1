@@ -56,6 +56,17 @@ median
 
 ## What is the average daily activity pattern?
 
+```{r, echo=TRUE}
+interval_steps <- initialData %>% 
+  group_by(interval) %>%
+  summarise(steps = mean(steps, na.rm =TRUE))
+
+ggplot(data=interval_steps, aes(x=interval, y=steps)) +
+    geom_line(col="red") +
+    ggtitle("Average steps per time interval") +
+    xlab("5-minute intervals") +
+    ylab("Average number of steps taken")
+```   
 
 
 
