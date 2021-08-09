@@ -30,6 +30,33 @@ library(dplyr)
 ##     intersect, setdiff, setequal, union
 ```
 
+```r
+library(lubridate)
+```
+
+```
+## 
+## Attaching package: 'lubridate'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+```
+
+```r
+options(dplyr.summarise.inform = FALSE)
+###### Get rid of info of dplyr when grouping: `summarise()` regrouping output by 'species' (override with `.groups` argument)
+###### https://rstats-tips.net/2020/07/31/get-rid-of-info-of-dplyr-when-grouping-summarise-regrouping-output-by-species-override-with-groups-argument/
+
+######   2020/05/06
+######  dplyr, dplyr-1-0-0
+###### Hadley Wickham, Kirill Müller
+
+###### https://www.tidyverse.org/blog/2020/05/dplyr-1-0-0-last-minute-additions/
+```
+
 
 ## Loading and preprocessing the initialData
 
@@ -137,7 +164,7 @@ ggplot(imputed_total_steps, aes(daily_steps)) +
 
 ![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
-##### We now compute the mean and median number of daily steps of the imputed initialData.
+##### We now compute the mean and median number of daily steps of the computed initial Data.
 
 
 
@@ -156,7 +183,7 @@ imputed_median = median(imputed_total_steps$daily_steps, na.rm=TRUE)
 ```
 ## [1] 10766.19
 ```
-##### We can calculate the difference of the means and medians between imputed and original initialData.
+##### We can calculate the difference of the means and medians between imputed and original initial Data.
 
 
 
@@ -175,6 +202,42 @@ median_diff <- imputed_median - median
 ```
 ## [1] 371.1887
 ```
+
+##### Are there differences in activity patterns between weekdays and weekends?
+
+
+```r
+library(lubridate)
+```
+
+
+```r
+day_of_week <- imputed_initialData %>%
+  mutate(
+    date = ymd(date),
+    weekday_or_weekend = case_when(wday(date) %in% 2:6 ~ "Weekday",
+                                   wday(date) %in% c(1,7) ~ "Weekend")
+  ) %>% select(-date) %>%
+  group_by(interval, weekday_or_weekend) %>%
+  summarise(
+    steps = mean(steps), .groups = NULL
+  )
+###### summarise() and grouping 
+###### There's a common confusion about the result of summarise(). How do you think the result of the following code will be grouped?
+###### https://www.tidyverse.org/blog/2020/05/dplyr-1-0-0-last-minute-additions/
+
+ggplot(day_of_week, aes(interval, steps)) + 
+  geom_line(col="red") +
+  facet_wrap(~weekday_or_weekend, nrow = 2) +
+  ggtitle("Average daily steps by type of date") + 
+  xlab("5-Minute intervals") + 
+  ylab("Average number of steps") +
+  theme( plot.title = element_text(hjust = 0.5))
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-20-1.png)<!-- -->
+
+
 
 
 
